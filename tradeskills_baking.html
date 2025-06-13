@@ -68,10 +68,23 @@
   <footer>
     May your crusts be golden and your rolls not fail.
   </footer>
-  <script src="recipes.js"></script>
-<script>
-  loadRecipes('tradeskills_baking.json');
-</script>
+  <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Baking Recipes</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Baking Recipes</h1>
 
+  <!-- This is where the recipes will appear -->
+  <div id="recipe-table"></div>
+
+  <!-- Recipe renderer -->
+  <script src="recipes.js"></script>
+  <script>
+    loadRecipes('tradeskills_baking.json');
+  </script>
 </body>
 </html>
