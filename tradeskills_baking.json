@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Fish Rolls",
+    "trivial": 135,
+    "components": ["Fresh Fish", "Batwing"],
+    "container": "Oven",
+    "yield": 1
+  },
+  {
+    "name": "Muffin",
+    "trivial": 46,
+    "components": ["Cup of Flour", "Cup of Milk", "Fruit", "Eggs"],
+    "container": "Oven",
+    "yield": 1
+  },
+  {
+    "name": "Patty Melt",
+    "trivial": 142,
+    "components": ["Loaf of Bread", "Rat Meat", "Cheese"],
+    "container": "Oven",
+    "yield": 1
+  },
+  {
+    "name": "Meat Pie",
+    "trivial": 115,
+    "components": ["Pie Tin", "Rat Meat", "Spices", "Vegetables", "Cup of Flour", "Cup of Water"],
+    "container": "Oven",
+    "yield": 1
+  }
+]
