@@ -77,7 +77,30 @@
 </head>
 <body>
   <h1>Baking Recipes</h1>
+<!-- Filters -->
+<input type="text" id="filter-material" placeholder="Search by material...">
 
+<!-- Tag Filters -->
+<label><input type="checkbox" name="tag-filter" value="vendor"> Vendor</label>
+<label><input type="checkbox" name="tag-filter" value="stat-food"> Stat Food</label>
+
+<!-- Meal Size Filters -->
+<label><input type="checkbox" name="meal-filter" value="snack"> Snack</label>
+<label><input type="checkbox" name="meal-filter" value="meal"> Meal</label>
+<label><input type="checkbox" name="meal-filter" value="feast"> Feast</label>
+
+<!-- Expansion Filters -->
+<label><input type="checkbox" name="expansion-filter" value="classic"> Classic</label>
+<label><input type="checkbox" name="expansion-filter" value="kunark"> Kunark</label>
+<label><input type="checkbox" name="expansion-filter" value="luclin"> Luclin</label>
+
+<!-- Stat Priority Filters -->
+<label><input type="checkbox" name="stat-priority" value="STR"> STR</label>
+<label><input type="checkbox" name="stat-priority" value="WIS"> WIS</label>
+<label><input type="checkbox" name="stat-priority" value="INT"> INT</label>
+
+<!-- Table Container -->
+<div id="recipe-table"></div>
   <!-- This is where the recipes will appear -->
   <div id="recipe-table"></div>
 
