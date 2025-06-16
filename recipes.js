@@ -1,64 +1,35 @@
-// recipes.js - Universal EQ tradeskill recipe table renderer
+// Full-featured Baking Recipe Table Renderer
 
-function loadRecipes(jsonPath) {
-  fetch(jsonPath)
-    .then(response => response.json())
-    .then(data => renderRecipeTable(data))
-    .catch(error => console.error("Error loading recipes:", error));
-}
+function loadRecipes(jsonPath) { fetch(jsonPath) .then(response => response.json()) .then(data => renderRecipeTable(data)) .catch(error => console.error("Error loading recipes:", error)); }
 
-function renderRecipeTable(recipes) {
-  const container = document.getElementById("recipe-table");
-  if (!container) return;
+function renderRecipeTable(recipes) { const container = document.getElementById("recipe-table"); if (!container) return; container.innerHTML = ""; // Clear previous contents
 
-  // Clear previous content if any
-  container.innerHTML = "";
+// Filters (assumes filter elements exist in HTML) const materialFilter = document.getElementById("filter-material").value.toLowerCase(); const tagFilters = Array.from(document.querySelectorAll("input[name='tag-filter']:checked")).map(e => e.value); const mealFilters = Array.from(document.querySelectorAll("input[name='meal-filter']:checked")).map(e => e.value); const expansionFilters = Array.from(document.querySelectorAll("input[name='expansion-filter']:checked")).map(e => e.value); const statPriority = getStatPriority(); // User-selected highlight list
 
-  // Create table
-  const table = document.createElement("table");
-  table.className = "recipe-table";
+// Filter and sort const filtered = recipes .filter(recipe => { const matchesMaterial = materialFilter === "" || recipe.materials.some(mat => mat.toLowerCase().includes(materialFilter)); const matchesTags = tagFilters.length === 0 || tagFilters.every(tag => recipe.tags?.includes(tag)); const matchesMeals = mealFilters.length === 0 || recipe.mealSize && mealFilters.includes(recipe.mealSize); const matchesExpansion = expansionFilters.length === 0 || expansionFilters.includes(recipe.expansion); return matchesMaterial && matchesTags && matchesMeals && matchesExpansion; }) .sort((a, b) => { const aHasPriority = statPriority.some(stat => a.stats?.join(" ").includes(stat)); const bHasPriority = statPriority.some(stat => b.stats?.join(" ").includes(stat)); if (aHasPriority && !bHasPriority) return -1; if (!aHasPriority && bHasPriority) return 1; return a.trivial - b.trivial; });
 
-  // Create table header
-  const thead = document.createElement("thead");
-  const headerRow = document.createElement("tr");
+// Build table const table = document.createElement("table"); table.className = "recipe-table";
 
-  const headers = ["Recipe", "Trivial", "Materials", "Created Item"];
-  headers.forEach(text => {
-    const th = document.createElement("th");
-    th.textContent = text;
-    headerRow.appendChild(th);
-  });
+const thead = document.createElement("thead"); thead.innerHTML = <tr> <th>Name</th> <th>Trivial</th> <th>Materials</th> <th>Result</th> <th>Tags</th> </tr>; table.appendChild(thead);
 
-  thead.appendChild(headerRow);
-  table.appendChild(thead);
+const tbody = document.createElement("tbody"); for (const recipe of filtered) { const tr = document.createElement("tr");
 
-  // Create table body
-  const tbody = document.createElement("tbody");
+const stats = recipe.stats?.join(", ") ?? "—";
+const mealIcon = getMealIcon(recipe.mealSize);
 
-  recipes.forEach(recipe => {
-    const row = document.createElement("tr");
+tr.innerHTML = `
+  <td>${recipe.name}</td>
+  <td>${recipe.trivial}</td>
+  <td>${recipe.materials.join(", ")}</td>
+  <td>${mealIcon} ${stats}</td>
+  <td>${(recipe.tags || []).join(", ")}</td>
+`;
+tbody.appendChild(tr);
 
-    const recipeName = document.createElement("td");
-    recipeName.textContent = recipe.name || "";
-    row.appendChild(recipeName);
+} table.appendChild(tbody);
 
-    const trivial = document.createElement("td");
-    trivial.textContent = recipe.trivial ?? "Unknown";
-    row.appendChild(trivial);
+container.appendChild(table); }
 
-    const materials = document.createElement("td");
-    materials.textContent = Array.isArray(recipe.materials)
-      ? recipe.materials.join(", ")
-      : recipe.materials || "";
-    row.appendChild(materials);
+function getMealIcon(size) { switch (size) { case "snack": return "🍽️"; case "meal": return "🍖"; case "feast": return "🥩"; default: return ""; } }
 
-    const created = document.createElement("td");
-    created.textContent = recipe.created || "";
-    row.appendChild(created);
-
-    tbody.appendChild(row);
-  });
-
-  table.appendChild(tbody);
-  container.appendChild(table);
-}
+function getStatPriority() { const checked = document.querySelectorAll("input[name='stat-priority']:checked"); return Array.from(checked).map(cb => cb.value.toUpperCase()); }
