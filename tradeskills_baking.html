@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Baking - Grand Order of Artisans and Tradeskills</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -65,49 +66,44 @@
     <p>Start with batwing crunchies or fish rolls. Once you hit higher levels, Misty Thicket Picnics become a favorite for stats and profit.</p>
   </section>
 
+  <section>
+    <h2>Recipe Browser</h2>
+
+    <!-- Filters -->
+    <input type="text" id="filter-material" placeholder="Search by material...">
+
+    <!-- Tag Filters -->
+    <label><input type="checkbox" name="tag-filter" value="vendor"> Vendor</label>
+    <label><input type="checkbox" name="tag-filter" value="stat-food"> Stat Food</label>
+
+    <!-- Meal Size Filters -->
+    <label><input type="checkbox" name="meal-filter" value="snack"> Snack</label>
+    <label><input type="checkbox" name="meal-filter" value="meal"> Meal</label>
+    <label><input type="checkbox" name="meal-filter" value="feast"> Feast</label>
+
+    <!-- Expansion Filters -->
+    <label><input type="checkbox" name="expansion-filter" value="classic"> Classic</label>
+    <label><input type="checkbox" name="expansion-filter" value="kunark"> Kunark</label>
+    <label><input type="checkbox" name="expansion-filter" value="luclin"> Luclin</label>
+
+    <!-- Stat Priority Filters -->
+    <label><input type="checkbox" name="stat-priority" value="STR"> STR</label>
+    <label><input type="checkbox" name="stat-priority" value="WIS"> WIS</label>
+    <label><input type="checkbox" name="stat-priority" value="INT"> INT</label>
+
+    <!-- Table Container -->
+    <div id="recipe-table"></div>
+  </section>
+
   <footer>
     May your crusts be golden and your rolls not fail.
   </footer>
-  <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Baking Recipes</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <h1>Baking Recipes</h1>
-<!-- Filters -->
-<input type="text" id="filter-material" placeholder="Search by material...">
 
-<!-- Tag Filters -->
-<label><input type="checkbox" name="tag-filter" value="vendor"> Vendor</label>
-<label><input type="checkbox" name="tag-filter" value="stat-food"> Stat Food</label>
+  <!-- Renderer Script -->
+  <script src="js/baking-renderer.js"></script>
+  <script>
+    loadRecipes("data/baking.json");
+  </script>
 
-<!-- Meal Size Filters -->
-<label><input type="checkbox" name="meal-filter" value="snack"> Snack</label>
-<label><input type="checkbox" name="meal-filter" value="meal"> Meal</label>
-<label><input type="checkbox" name="meal-filter" value="feast"> Feast</label>
-
-<!-- Expansion Filters -->
-<label><input type="checkbox" name="expansion-filter" value="classic"> Classic</label>
-<label><input type="checkbox" name="expansion-filter" value="kunark"> Kunark</label>
-<label><input type="checkbox" name="expansion-filter" value="luclin"> Luclin</label>
-
-<!-- Stat Priority Filters -->
-<label><input type="checkbox" name="stat-priority" value="STR"> STR</label>
-<label><input type="checkbox" name="stat-priority" value="WIS"> WIS</label>
-<label><input type="checkbox" name="stat-priority" value="INT"> INT</label>
-
-<!-- Table Container -->
-<div id="recipe-table"></div>
-  <!-- This is where the recipes will appear -->
-  <div id="recipe-table"></div>
-
-  <!-- Recipe renderer -->
-  <script src="scripts/recipes.js"></script>
-<script>
-  loadRecipes("data/tradeskills_baking.json");
-</script>
 </body>
 </html>
