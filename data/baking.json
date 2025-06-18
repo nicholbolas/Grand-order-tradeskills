@@ -2,7 +2,7 @@
   {
     "name": "Fish Rolls",
     "trivial": 82,
-    "materials": ["Fresh Fish", "Bat Wings", "Oven"],
+    "components": ["Fresh Fish", "Bat Wings", "Oven"],
     "result": "Fish Rolls",
     "tags": ["classic", "vendor"],
     "mealSize": "meal",
@@ -12,7 +12,7 @@
   {
     "name": "Misty Thicket Picnic",
     "trivial": 190,
-    "materials": ["Lettuce", "Tomatoes", "Bread", "Picnic Basket"],
+    "components": ["Lettuce", "Tomatoes", "Bread", "Picnic Basket"],
     "result": "Misty Thicket Picnic",
     "tags": ["stat-food"],
     "mealSize": "feast",
