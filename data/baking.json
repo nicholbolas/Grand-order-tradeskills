@@ -1,22 +1,22 @@
 [
   {
     "name": "Fish Rolls",
-    "trivial": 82,
+    "trivial": 135,
     "components": ["Fresh Fish", "Bat Wings", "Oven"],
     "result": "Fish Rolls",
     "tags": ["classic", "vendor"],
     "mealSize": "meal",
     "expansion": "classic",
-    "stats": ["DEX +3", "HP +5"]
+    "stats": []
   },
   {
     "name": "Misty Thicket Picnic",
     "trivial": 190,
-    "components": ["Lettuce", "Tomatoes", "Bread", "Picnic Basket"],
+    "components": ["Picnic Basket","jumjum salad", "jumjum spiced beer", "marmalade sandwich", "mature cheese", "royal mints", "slice of jumjum cake x2"],
     "result": "Misty Thicket Picnic",
     "tags": ["stat-food"],
     "mealSize": "feast",
     "expansion": "kunark",
-    "stats": ["STR +10", "STA +10", "HP +10"]
+    "stats": ["STR +5", "STA +5","WIS +5", "INT +5", "HP +20", "MANA +30"]
   }
 ]
