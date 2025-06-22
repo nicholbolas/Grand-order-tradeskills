@@ -1,4 +1,17 @@
-body { font-family: serif; background-color: #f4f1e9; padding: 2rem; } a { display: block; margin-bottom: 1rem; font-weight: bold; }
+/* Base layout */
+body {
+  font-family: serif;
+  background-color: #f4f1e9;
+  padding: 2rem;
+}
+
+a {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+/* Recipe Table Styling */
 .recipe-table {
   width: 100%;
   border-collapse: collapse;
@@ -42,9 +55,42 @@ body { font-family: serif; background-color: #f4f1e9; padding: 2rem; } a { displ
     white-space: normal;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
   }
+
+  .recipe-table td.hover-expand:hover {
+    background-color: #f6f0e6;
+  }
 }
 
-/* Hover icon cue (optional, not yet implemented) */
-.recipe-table td.hover-expand:hover {
-  background-color: #f6f0e6;
+/* 📦 Subcombine Styles */
+.subcombine {
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.sub-toggle {
+  cursor: pointer;
+  color: #0066cc;
+  text-decoration: underline;
+  font-weight: bold;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Nested ingredient list */
+.sub-details {
+  margin-top: 4px;
+  font-size: 0.9em;
+  color: #444;
+  padding-left: 1rem;
+  border-left: 2px dashed #ccc;
+}
+
+/* 📱 Mobile tap-to-expand support */
+@media (hover: none) {
+  .recipe-table td.hover-expand {
+    white-space: normal;
+  }
 }
