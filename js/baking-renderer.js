@@ -87,4 +87,7 @@ function enableMobileExpand() {
       cell.textContent = current === full ? truncate(full) : full;
     });
   });
+  function getStatPriority() {
+  return Array.from(document.querySelectorAll("input[name='stat-priority']:checked")).map(e => e.value.toLowerCase());
+  }
 }
