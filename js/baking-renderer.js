@@ -1,3 +1,10 @@
+    function loadRecipes(jsonPath = "/data/baking.json") {
+  fetch(jsonPath)
+    .then(response => response.json())
+    .then(data => renderRecipeTable(data))
+    .catch(error => console.error("Error loading recipes:", error));
+}
+
 function renderRecipeTable(recipes) {
   const container = document.getElementById("recipe-table");
   if (!container) return;
@@ -72,6 +79,12 @@ function renderRecipeTable(recipes) {
   // Enable expand-on-tap for mobile
   enableMobileExpand();
 }
+
+function getStatPriority() {
+  return Array.from(document.querySelectorAll("input[name='stat-priority']:checked"))
+    .map(e => e.value.toLowerCase());
+}
+
 function truncate(text, limit = 40) {
   return text.length > limit ? text.slice(0, limit) + "…" : text;
 }
@@ -87,7 +100,14 @@ function enableMobileExpand() {
       cell.textContent = current === full ? truncate(full) : full;
     });
   });
-  function getStatPriority() {
-  return Array.from(document.querySelectorAll("input[name='stat-priority']:checked")).map(e => e.value.toLowerCase());
+}
+
+function getMealIcon(mealSize) {
+  switch ((mealSize || "").toLowerCase()) {
+    case "snack": return "🍪";
+    case "meal": return "🥘";
+    case "feast": return "🍽️";
+    default: return "❔";
   }
 }
+    
