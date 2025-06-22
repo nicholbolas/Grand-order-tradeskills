@@ -1,23 +1,14 @@
-// Load baking recipes from JSON
-function loadRecipes(jsonPath = "/data/baking.json") {
-  fetch(jsonPath)
-    .then(response => response.json())
-    .then(data => renderRecipeTable(data))
-    .catch(error => console.error("Error loading recipes:", error));
-}
-
-// Render the full recipe table
 function renderRecipeTable(recipes) {
   const container = document.getElementById("recipe-table");
   if (!container) return;
-  container.innerHTML = ""; // Clear previous content
+  container.innerHTML = "";
 
   // Grab filters from UI
   const materialFilter = document.getElementById("filter-material")?.value.toLowerCase() || "";
   const tagFilters = Array.from(document.querySelectorAll("input[name='tag-filter']:checked")).map(e => e.value);
   const mealFilters = Array.from(document.querySelectorAll("input[name='meal-filter']:checked")).map(e => e.value);
   const expansionFilters = Array.from(document.querySelectorAll("input[name='expansion-filter']:checked")).map(e => e.value);
-  const statPriority = getStatPriority(); // Optional stat highlighting
+  const statPriority = getStatPriority();
 
   // Filter and sort recipes
   const filtered = recipes
@@ -25,7 +16,7 @@ function renderRecipeTable(recipes) {
       const materials = recipe.components?.map(mat => mat.toLowerCase()) || [];
       const matchesMaterial = materialFilter === "" || materials.some(mat => mat.includes(materialFilter));
       const matchesTags = tagFilters.length === 0 || tagFilters.every(tag => recipe.tags?.includes(tag));
-      const matchesMeals = mealFilters.length === 0 || (recipe.mealSize && mealFilters.includes(recipe.mealSize));
+      const matchesMeals = mealFilters.length === 0 || (recipe.mealSize && mealFilters.includes(recipe.mealSize.toLowerCase()));
       const matchesExpansion = expansionFilters.length === 0 || expansionFilters.includes(recipe.expansion);
       return matchesMaterial && matchesTags && matchesMeals && matchesExpansion;
     })
@@ -46,8 +37,10 @@ function renderRecipeTable(recipes) {
     <tr>
       <th>Name</th>
       <th>Trivial</th>
-      <th>Materials</th>
-      <th>Result</th>
+      <th>Yield</th>
+      <th>Meal Size</th>
+      <th class="hover-expand">Stats</th>
+      <th class="hover-expand">Components</th>
       <th>Tags</th>
     </tr>
   `;
@@ -55,14 +48,19 @@ function renderRecipeTable(recipes) {
 
   const tbody = document.createElement("tbody");
   for (const recipe of filtered) {
-    const stats = recipe.stats?.join(", ") ?? "—";
-    const mealIcon = getMealIcon(recipe.mealSize ?? "");
+    const stats = (recipe.stats && Object.entries(recipe.stats).map(([k, v]) => `${k} +${v}`).join(", ")) || "—";
+    const components = (recipe.components || []).join(", ");
+    const yieldVal = recipe.yield ?? 1;
+    const mealSize = recipe.mealSize ?? "—";
+
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${recipe.name}</td>
       <td>${recipe.trivial}</td>
-      <td>${(recipe.components || []).join(", ")}</td>
-      <td>${mealIcon} ${stats}</td>
+      <td>${yieldVal}</td>
+      <td>${getMealIcon(mealSize)} ${mealSize}</td>
+      <td class="hover-expand" data-full="${stats}">${truncate(stats)}</td>
+      <td class="hover-expand" data-full="${components}">${truncate(components)}</td>
       <td>${(recipe.tags || []).join(", ")}</td>
     `;
     tbody.appendChild(tr);
@@ -70,20 +68,23 @@ function renderRecipeTable(recipes) {
 
   table.appendChild(tbody);
   container.appendChild(table);
+
+  // Enable expand-on-tap for mobile
+  enableMobileExpand();
+}
+function truncate(text, limit = 40) {
+  return text.length > limit ? text.slice(0, limit) + "…" : text;
 }
 
-// Return a meal size icon
-function getMealIcon(size) {
-  switch (size) {
-    case "snack": return "🍽️";
-    case "meal": return "🍖";
-    case "feast": return "🥩";
-    default: return "";
-  }
-}
+function enableMobileExpand() {
+  const isMobile = window.matchMedia("(hover: none)").matches;
+  if (!isMobile) return;
 
-// Return list of prioritized stats (from checkboxes)
-function getStatPriority() {
-  return Array.from(document.querySelectorAll("input[name='stat-priority']:checked"))
-    .map(e => e.value.toLowerCase());
+  document.querySelectorAll(".hover-expand").forEach(cell => {
+    cell.addEventListener("click", () => {
+      const full = cell.getAttribute("data-full");
+      const current = cell.textContent;
+      cell.textContent = current === full ? truncate(full) : full;
+    });
+  });
 }
