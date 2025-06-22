@@ -27,4 +27,21 @@
     "expansion": "kunark",
     "stats": ["STR +5", "STA +5", "WIS +5", "INT +5", "HP +20", "MANA +30"]
   }
+  {
+  "name": "Jumjum Salad",
+  "trivial": 142,
+  "components": [
+    "Fennel",
+    "Jumjum Stalk",
+    "Lettuce",
+    "Vegetables",
+    "Mixing Bowl"
+  ],
+  "result": "RECIPE NAME",
+  "yield": 10,
+  "tags": ["classic"],
+  "mealSize": "hearty meal",
+  "expansion": "classic",
+  "stats": []
+  }
 ]
