@@ -1,8 +1,41 @@
-    function loadRecipes(jsonPath = "/data/baking.json") {
+          function loadRecipes(jsonPath = "/data/baking.json") {
   fetch(jsonPath)
     .then(response => response.json())
     .then(data => renderRecipeTable(data))
     .catch(error => console.error("Error loading recipes:", error));
+}
+
+// Normalize names to match subcombines, ignoring case/quantities
+function normalizeName(name) {
+  return name.toLowerCase().replace(/ x\d+$/, "").trim();
+}
+
+// Find a matching subcombine recipe
+function findSubcombine(name, recipes) {
+  const norm = normalizeName(name);
+  return recipes.find(r => normalizeName(r.result) === norm);
+}
+
+// Create subcombine-aware components column HTML
+function componentsHTML(components, recipes) {
+  return components.map(comp => {
+    const sub = findSubcombine(comp, recipes);
+    if (sub) {
+      const subID = "sub_" + Math.random().toString(36).substr(2, 8);
+      const subHTML = (sub.components || []).join(", ");
+
+      return `
+        <div class="subcombine">
+          <span class="sub-toggle" onclick="toggleSub('${subID}')">${comp}</span>
+          <div id="${subID}" class="sub-details" style="display:none;">
+            ↳ ${subHTML}
+          </div>
+        </div>
+      `;
+    } else {
+      return comp;
+    }
+  }).join(", ");
 }
 
 function renderRecipeTable(recipes) {
@@ -56,7 +89,7 @@ function renderRecipeTable(recipes) {
   const tbody = document.createElement("tbody");
   for (const recipe of filtered) {
     const stats = (recipe.stats && Object.entries(recipe.stats).map(([k, v]) => `${k} +${v}`).join(", ")) || "—";
-    const components = (recipe.components || []).join(", ");
+    const components = componentsHTML(recipe.components || [], recipes);
     const yieldVal = recipe.yield ?? 1;
     const mealSize = recipe.mealSize ?? "—";
 
@@ -67,7 +100,7 @@ function renderRecipeTable(recipes) {
       <td>${yieldVal}</td>
       <td>${getMealIcon(mealSize)} ${mealSize}</td>
       <td class="hover-expand" data-full="${stats}">${truncate(stats)}</td>
-      <td class="hover-expand" data-full="${components}">${truncate(components)}</td>
+      <td class="hover-expand" data-full="${stripHTML(components)}">${components}</td>
       <td>${(recipe.tags || []).join(", ")}</td>
     `;
     tbody.appendChild(tr);
@@ -80,6 +113,12 @@ function renderRecipeTable(recipes) {
   enableMobileExpand();
 }
 
+function toggleSub(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = el.style.display === "none" ? "block" : "none";
+}
+
 function getStatPriority() {
   return Array.from(document.querySelectorAll("input[name='stat-priority']:checked"))
     .map(e => e.value.toLowerCase());
@@ -87,6 +126,12 @@ function getStatPriority() {
 
 function truncate(text, limit = 40) {
   return text.length > limit ? text.slice(0, limit) + "…" : text;
+}
+
+function stripHTML(html) {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  return div.textContent || div.innerText || "";
 }
 
 function enableMobileExpand() {
@@ -110,4 +155,3 @@ function getMealIcon(mealSize) {
     default: return "❔";
   }
 }
-    
