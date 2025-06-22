@@ -1,6 +1,6 @@
 // Full-featured Baking Recipe Table Renderer
 
-function loadRecipes(jsonPath) { fetch(jsonPath) .then(response => response.json()) .then(data => renderRecipeTable(data)) .catch(error => console.error("Error loading recipes:", error)); }
+function loadRecipes("/data/baking.json") { fetch(jsonPath) .then(response => response.json()) .then(data => renderRecipeTable(data)) .catch(error => console.error("Error loading recipes:", error)); }
 
 function renderRecipeTable(recipes) { const container = document.getElementById("recipe-table"); if (!container) return; container.innerHTML = ""; // Clear previous contents
 
