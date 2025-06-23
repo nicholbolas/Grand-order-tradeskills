@@ -14,18 +14,22 @@ function findSubcombine(name, recipes) {
   return recipes.find(r => normalizeName(r.result) === norm);
 }
 
-function componentsHTML(components, recipes) {
+// Recursive component renderer
+function componentsHTML(components, recipes, seen = new Set()) {
   return components.map(comp => {
     const sub = findSubcombine(comp, recipes);
-    if (sub) {
+    const compKey = normalizeName(comp);
+
+    if (sub && !seen.has(compKey)) {
       const subID = `sub_${crypto.randomUUID()}`;
-      const subList = (sub.components || []).map(c => `<li>${c}</li>`).join("");
+      seen.add(compKey);
+      const nestedHTML = componentsHTML(sub.components || [], recipes, new Set(seen));
       return `
         <div class="subcombine">
           <span class="sub-toggle" onclick="toggleSub('${subID}', this)">▶ ${comp}</span>
-          <ul id="${subID}" class="sub-details" style="display: none;">
-            ${subList}
-          </ul>
+          <div id="${subID}" class="sub-details" style="display: none; margin-left: 1em;">
+            ${nestedHTML}
+          </div>
         </div>
       `;
     } else {
@@ -102,7 +106,6 @@ function renderRecipeTable(recipes) {
   enableMobileExpand();
 }
 
-// Toggle subcombine visibility
 function toggleSub(id, toggleElement) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -113,7 +116,6 @@ function toggleSub(id, toggleElement) {
   }
 }
 
-// Handle hover-expand on mobile
 function enableMobileExpand() {
   const isMobile = window.matchMedia("(hover: none)").matches;
   if (!isMobile) return;
