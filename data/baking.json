@@ -26,7 +26,7 @@
     "mealSize": "feast",
     "expansion": "kunark",
     "stats": ["STR +5", "STA +5", "WIS +5", "INT +5", "HP +20", "MANA +30"]
-  }
+  },
   {
   "name": "Jumjum Salad",
   "trivial": 142,
