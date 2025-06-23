@@ -62,7 +62,52 @@ a {
 }
 
 /* 📦 Subcombine Styles */
-/* Container for each component block (especially subcombines) */
+.subcombine {
+  margin: 0.5em 0;
+  padding: 0.5em;
+  background-color: #f9f6f0;
+  border-left: 3px solid #b88c5a;
+  border-radius: 4px;
+}
+
+.subcombine .subcombine-content {
+  display: none;
+  padding-left: 1em;
+  font-size: 0.9em;
+  margin-top: 0.3em;
+  color: #333;
+}
+
+.subcombine:not(.collapsed) .subcombine-content {
+  display: block;
+}
+
+.toggle-header {
+  cursor: pointer;
+  font-weight: bold;
+  color: #4b2900;
+  user-select: none;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-header:hover {
+  text-decoration: underline;
+}
+
+.triangle {
+  display: inline-block;
+  margin-right: 6px;
+  font-size: 0.9em;
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+}
+
+.subcombine:not(.collapsed) .triangle {
+  transform: rotate(90deg);
+}
+
+/* Component presentation helpers */
 .component-block {
   margin-bottom: 0.5em;
   padding: 0.5em;
@@ -71,32 +116,9 @@ a {
   border-radius: 0.25em;
 }
 
-/* Inline components (non-subcombine) */
 .component-inline {
   display: inline-block;
   margin-right: 0.5em;
-}
-
-/* Toggle clickable text */
-.sub-toggle {
-  cursor: pointer;
-  font-weight: bold;
-  color: #4b2900;
-  user-select: none;
-}
-
-.sub-toggle:hover {
-  text-decoration: underline;
-}
-
-/* The nested list of subcombine ingredients */
-.sub-list {
-  display: none;
-  margin-left: 1.5em;
-  margin-top: 0.3em;
-  list-style: disc;
-  color: #444;
-  font-size: 0.9em;
 }
 
 /* 📱 Mobile tap-to-expand support */
