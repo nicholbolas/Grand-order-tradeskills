@@ -3,14 +3,12 @@
   if (!container) return;
   container.innerHTML = "";
 
-  // Grab filters from UI
   const materialFilter = document.getElementById("filter-material")?.value.toLowerCase() || "";
   const tagFilters = Array.from(document.querySelectorAll("input[name='tag-filter']:checked")).map(e => e.value);
   const mealFilters = Array.from(document.querySelectorAll("input[name='meal-filter']:checked")).map(e => e.value);
   const expansionFilters = Array.from(document.querySelectorAll("input[name='expansion-filter']:checked")).map(e => e.value);
   const statPriority = getStatPriority();
 
-  // Filter and sort recipes
   const filtered = recipes
     .filter(recipe => {
       const materials = recipe.components?.map(mat => mat.toLowerCase()) || [];
@@ -28,7 +26,6 @@
       return a.trivial - b.trivial;
     });
 
-  // Build the table
   const table = document.createElement("table");
   table.className = "recipe-table";
 
@@ -49,9 +46,9 @@
   const tbody = document.createElement("tbody");
   for (const recipe of filtered) {
     const stats = (recipe.stats && Object.entries(recipe.stats).map(([k, v]) => `${k} +${v}`).join(", ")) || "—";
-    const components = componentsHTML(recipe.components || [], recipes);
     const yieldVal = recipe.yield ?? 1;
     const mealSize = recipe.mealSize ?? "—";
+    const components = componentsHTML(recipe.components || [], recipes);
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -69,6 +66,6 @@
   table.appendChild(tbody);
   container.appendChild(table);
 
-  // Enable expand-on-tap for mobile
   enableMobileExpand();
+  enableSubcombineToggles(); // ← THIS IS KEY
             }
