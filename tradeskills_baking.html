@@ -25,13 +25,50 @@
       font-weight: bold;
     }
     section {
-      max-width: 800px;
+      max-width: 900px;
       margin: auto;
     }
     footer {
       margin-top: 4em;
       font-style: italic;
       text-align: center;
+    }
+
+    /* Subcombine toggle styles */
+    .subcombine {
+      display: inline-block;
+      margin-right: 0.5em;
+    }
+    .sub-toggle {
+      cursor: pointer;
+      color: #2b6cb0;
+    }
+    .sub-toggle:hover {
+      text-decoration: underline;
+    }
+    .sub-details {
+      padding-left: 1em;
+      margin-top: 0.25em;
+    }
+
+    /* Recipe Table Styles */
+    table.recipe-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2em;
+      background: white;
+    }
+    table.recipe-table th,
+    table.recipe-table td {
+      border: 1px solid #ccc;
+      padding: 0.5em;
+      text-align: left;
+    }
+    table.recipe-table th {
+      background-color: #f4e8db;
+    }
+    .hover-expand {
+      cursor: pointer;
     }
   </style>
 </head>
@@ -91,7 +128,7 @@
     <label><input type="checkbox" name="stat-priority" value="WIS"> WIS</label>
     <label><input type="checkbox" name="stat-priority" value="INT"> INT</label>
 
-    <!-- Table Container -->
+    <!-- Recipe Table Mount Point -->
     <div id="recipe-table"></div>
   </section>
 
@@ -99,10 +136,12 @@
     May your crusts be golden and your rolls not fail.
   </footer>
 
-  <!-- Renderer Script -->
-  <script src="js/baking-renderer.js"></script>
+  <!-- Use this version of your recipe renderer -->
+  <script src="js/recipes.js"></script>
   <script>
-    loadRecipes("data/baking.json");
+    window.addEventListener("DOMContentLoaded", () => {
+      loadRecipes("data/baking.json");
+    });
   </script>
 
 </body>
