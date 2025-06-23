@@ -1,44 +1,4 @@
-          function loadRecipes(jsonPath = "/data/baking.json") {
-  fetch(jsonPath)
-    .then(response => response.json())
-    .then(data => renderRecipeTable(data))
-    .catch(error => console.error("Error loading recipes:", error));
-}
-
-// Normalize names to match subcombines, ignoring case/quantities
-function normalizeName(name) {
-  return name.toLowerCase().replace(/ x\d+$/, "").trim();
-}
-
-// Find a matching subcombine recipe
-function findSubcombine(name, recipes) {
-  const norm = normalizeName(name);
-  return recipes.find(r => normalizeName(r.result) === norm);
-}
-
-// Create subcombine-aware components column HTML
-function componentsHTML(components, recipes) {
-  return components.map(comp => {
-    const sub = findSubcombine(comp, recipes);
-    if (sub) {
-      const subID = "sub_" + Math.random().toString(36).substr(2, 8);
-      const subHTML = (sub.components || []).join(", ");
-
-      return `
-        <div class="subcombine">
-          <span class="sub-toggle" onclick="toggleSub('${subID}')">${comp}</span>
-          <div id="${subID}" class="sub-details" style="display:none;">
-            ↳ ${subHTML}
-          </div>
-        </div>
-      `;
-    } else {
-      return comp;
-    }
-  }).join(", ");
-}
-
-function renderRecipeTable(recipes) {
+            function renderRecipeTable(recipes) {
   const container = document.getElementById("recipe-table");
   if (!container) return;
   container.innerHTML = "";
@@ -111,47 +71,4 @@ function renderRecipeTable(recipes) {
 
   // Enable expand-on-tap for mobile
   enableMobileExpand();
-}
-
-function toggleSub(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.style.display = el.style.display === "none" ? "block" : "none";
-}
-
-function getStatPriority() {
-  return Array.from(document.querySelectorAll("input[name='stat-priority']:checked"))
-    .map(e => e.value.toLowerCase());
-}
-
-function truncate(text, limit = 40) {
-  return text.length > limit ? text.slice(0, limit) + "…" : text;
-}
-
-function stripHTML(html) {
-  const div = document.createElement("div");
-  div.innerHTML = html;
-  return div.textContent || div.innerText || "";
-}
-
-function enableMobileExpand() {
-  const isMobile = window.matchMedia("(hover: none)").matches;
-  if (!isMobile) return;
-
-  document.querySelectorAll(".hover-expand").forEach(cell => {
-    cell.addEventListener("click", () => {
-      const full = cell.getAttribute("data-full");
-      const current = cell.textContent;
-      cell.textContent = current === full ? truncate(full) : full;
-    });
-  });
-}
-
-function getMealIcon(mealSize) {
-  switch ((mealSize || "").toLowerCase()) {
-    case "snack": return "🍪";
-    case "meal": return "🥘";
-    case "feast": return "🍽️";
-    default: return "❔";
-  }
-}
+            }
