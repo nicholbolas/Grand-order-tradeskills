@@ -62,30 +62,41 @@ a {
 }
 
 /* 📦 Subcombine Styles */
-.subcombine {
-  display: inline-block;
-  margin-right: 6px;
+/* Container for each component block (especially subcombines) */
+.component-block {
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+  background: #f9f1e8;
+  border-left: 4px solid #c96;
+  border-radius: 0.25em;
 }
 
+/* Inline components (non-subcombine) */
+.component-inline {
+  display: inline-block;
+  margin-right: 0.5em;
+}
+
+/* Toggle clickable text */
 .sub-toggle {
   cursor: pointer;
-  color: #0066cc;
-  text-decoration: underline;
   font-weight: bold;
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: inherit;
-  font-size: inherit;
+  color: #4b2900;
+  user-select: none;
 }
 
-/* Nested ingredient list */
-.sub-details {
-  margin-top: 4px;
-  font-size: 0.9em;
+.sub-toggle:hover {
+  text-decoration: underline;
+}
+
+/* The nested list of subcombine ingredients */
+.sub-list {
+  display: none;
+  margin-left: 1.5em;
+  margin-top: 0.3em;
+  list-style: disc;
   color: #444;
-  padding-left: 1rem;
-  border-left: 2px dashed #ccc;
+  font-size: 0.9em;
 }
 
 /* 📱 Mobile tap-to-expand support */
