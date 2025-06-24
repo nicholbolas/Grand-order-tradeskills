@@ -124,7 +124,7 @@ function renderRecipeTable(recipes) {
         <th>Meal Size</th>
         <th class="hover-expand">Stats</th>
         <th class="hover-expand">Components</th>
-        <th>Tags</th>
+        <th>Expansion</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -136,6 +136,7 @@ function renderRecipeTable(recipes) {
     const stats = (recipe.stats && Object.entries(recipe.stats).map(([k, v]) => `${k} +${v}`).join(", ")) || "—";
     const yieldVal = recipe.yield ?? 1;
     const mealSize = recipe.mealSize ?? "—";
+    const expansion = recipe.expansion || "—";
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -145,7 +146,7 @@ function renderRecipeTable(recipes) {
       <td>${getMealIcon(mealSize)} ${mealSize}</td>
       <td class="hover-expand" data-full="${stats}">${truncate(stats)}</td>
       <td class="hover-expand"></td>
-      <td>${(recipe.tags || []).join(", ")}</td>
+      <td>${expansion}</td>
     `;
 
     const tdComponents = tr.children[5];
