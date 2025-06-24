@@ -4,9 +4,9 @@
     "trivial": 135,
     "components": ["Fresh Fish", "Bat Wings", "Oven"],
     "result": "Fish Rolls",
-    "tags": ["classic", "vendor"],
+    "tags": ["vendor"],
     "mealSize": "meal",
-    "expansion": "classic",
+    "expansion": "original",
     "stats": []
   },
   {
@@ -22,9 +22,9 @@
       "Slice of Jumjum Cake x2"
     ],
     "result": "Misty Thicket Picnic",
-    "tags": ["stat-food"],
+    "tags": ["stat food"],
     "mealSize": "feast",
-    "expansion": "kunark",
+    "expansion": "classic",
     "stats": ["STR +5", "STA +5", "WIS +5", "INT +5", "HP +20", "MANA +30"]
   },
   {
@@ -39,7 +39,7 @@
   ],
   "result": "Jumjum Salad",
   "yield": 10,
-  "tags": ["classic"],
+  "tags": [],
   "mealSize": "hearty meal",
   "expansion": "classic",
   "stats": []
