@@ -6,7 +6,7 @@
     "result": "Fish Rolls",
     "tags": ["vendor"],
     "mealSize": "meal",
-    "expansion": "classic",
+    "expansion": "original",
     "stats": []
   },
   {
@@ -24,7 +24,7 @@
     "result": "Misty Thicket Picnic",
     "tags": ["stat food"],
     "mealSize": "feast",
-    "expansion": "classic",
+    "expansion": "original",
     "stats": ["STR +5", "STA +5", "WIS +5", "INT +5", "HP +20", "MANA +30"]
   },
   {
@@ -41,7 +41,7 @@
   "yield": 10,
   "tags": [],
   "mealSize": "hearty meal",
-  "expansion": "classic",
+  "expansion": "original",
   "stats": []
   }
 ]
