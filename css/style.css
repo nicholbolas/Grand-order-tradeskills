@@ -1,69 +1,91 @@
-/* Base Styles */
+/* === Base Layout === */
 body {
-  font-family: serif;
-  background-color: #f4f1e9;
-  padding: 2rem;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  padding: 2em;
+  background-color: #fff8f2;
+  color: #333;
 }
 
-a {
-  display: block;
-  margin-bottom: 1rem;
-  font-weight: bold;
+h1, h2 {
+  margin-top: 0;
+  color: #4b2e2e;
 }
 
-/* Recipe Table Styling */
-.recipe-table {
+/* === Table Styling === */
+table.recipe-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 2rem;
-  font-family: inherit;
-  font-size: 0.95rem;
-  background-color: #fffdfa;
+  margin-top: 1em;
 }
 
-.recipe-table th,
-.recipe-table td {
+table.recipe-table th,
+table.recipe-table td {
   border: 1px solid #ccc;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5em;
   text-align: left;
   vertical-align: top;
 }
 
-/* Max-width for long columns + truncate */
-.recipe-table td.hover-expand {
-  max-width: 200px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+table.recipe-table th {
+  background-color: #f9e6da;
+  color: #333;
+}
+
+table.recipe-table tr:nth-child(even) {
+  background-color: #fcf4ee;
+}
+
+/* === Hover Expand for Stats / Components === */
+.hover-expand {
   cursor: pointer;
   position: relative;
 }
 
-/* Tooltip for desktop hover */
-@media (hover: hover) {
-  .recipe-table td.hover-expand:hover::after {
-    content: attr(data-full);
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 10;
-    background-color: #333;
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 6px;
-    max-width: 300px;
-    white-space: normal;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  }
-
-  .recipe-table td.hover-expand:hover {
-    background-color: #f6f0e6;
-  }
+.hover-expand::after {
+  content: ' ⓘ';
+  font-size: 0.8em;
+  color: #777;
 }
 
-/* 📱 Mobile tap-to-expand support */
+/* === Subcombine Nesting === */
+.component-block {
+  margin-top: 0.3em;
+}
+
+.subcombine {
+  padding-left: 0.75em;
+  border-left: 2px dashed #bbb;
+  margin-top: 0.3em;
+}
+
+.sub-toggle {
+  cursor: pointer;
+  user-select: none;
+  display: inline-block;
+  margin-bottom: 0.2em;
+  font-weight: bold;
+  color: #5a3226;
+}
+
+.component-inline {
+  display: block;
+  margin-bottom: 0.2em;
+  margin-left: 0.5em;
+}
+
+/* === Filters / Controls (Optional, if used) === */
+.filters {
+  margin-bottom: 1em;
+}
+
+.filters label {
+  margin-right: 1em;
+}
+
+/* === Responsive Touch Handling === */
 @media (hover: none) {
-  .recipe-table td.hover-expand {
-    white-space: normal;
+  .hover-expand::after {
+    content: '';
   }
 }
