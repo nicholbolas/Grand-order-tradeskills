@@ -77,19 +77,32 @@ function renderRecipeTable(recipes) {
   if (!container) return;
   container.innerHTML = "";
 
-  const materialFilter = document.getElementById("filter-material")?.value.toLowerCase() || "";
-  const tagFilters = Array.from(document.querySelectorAll("input[name='tag-filter']:checked")).map(e => e.value);
-  const mealFilters = Array.from(document.querySelectorAll("input[name='meal-filter']:checked")).map(e => e.value);
-  const expansionFilters = Array.from(document.querySelectorAll("input[name='expansion-filter']:checked")).map(e => e.value);
+  const materialFilter = document.getElementById("filter-material")?.value.toLowerCase().trim() || "";
+  const tagFilters = Array.from(document.querySelectorAll("input[name='tag-filter']:checked")).map(e => e.value.trim().toLowerCase());
+  const mealFilters = Array.from(document.querySelectorAll("input[name='meal-filter']:checked")).map(e => e.value.trim().toLowerCase());
+  const expansionFilters = Array.from(document.querySelectorAll("input[name='expansion-filter']:checked")).map(e => e.value.trim().toLowerCase());
   const statPriority = getStatPriority();
 
   const filtered = recipes
     .filter(recipe => {
-      const materials = recipe.components?.map(mat => mat.toLowerCase()) || [];
-      const matchesMaterial = materialFilter === "" || materials.some(mat => mat.includes(materialFilter));
-      const matchesTags = tagFilters.length === 0 || tagFilters.every(tag => recipe.tags?.includes(tag));
-      const matchesMeals = mealFilters.length === 0 || (recipe.mealSize && mealFilters.includes(recipe.mealSize.toLowerCase()));
-      const matchesExpansion = expansionFilters.length === 0 || expansionFilters.includes(recipe.expansion);
+      const materials = (recipe.components || []).map(mat => mat.toLowerCase().trim());
+      const matchesMaterial =
+        materialFilter === "" ||
+        materials.some(mat => mat.includes(materialFilter));
+
+      const recipeTags = (recipe.tags || []).map(tag => tag.trim().toLowerCase());
+      const matchesTags =
+        tagFilters.length === 0 ||
+        tagFilters.every(tag => recipeTags.includes(tag));
+
+      const recipeMeal = (recipe.mealSize || "").trim().toLowerCase();
+      const matchesMeals =
+        mealFilters.length === 0 || mealFilters.includes(recipeMeal);
+
+      const recipeExpansion = (recipe.expansion || "").trim().toLowerCase();
+      const matchesExpansion =
+        expansionFilters.length === 0 || expansionFilters.includes(recipeExpansion);
+
       return matchesMaterial && matchesTags && matchesMeals && matchesExpansion;
     })
     .sort((a, b) => {
