@@ -1,1 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Baking - Grand Order of Artisans and Tradeskills</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Baking Recipes</h1>
+  <div id="recipe-container"></div>
 
+  <script src="scripts/loadRecipes.js"></script>
+  <script>
+    loadRecipes("/data/baking.json");
+  </script>
+</body>
+</html>
