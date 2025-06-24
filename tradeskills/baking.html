@@ -7,12 +7,50 @@
 </head>
 <body>
   <h1>Baking Recipes</h1>
+
+  <!-- 🔽 FILTERS BLOCK -->
+  <div id="filters" class="filters">
+    <label>
+      Search Materials:
+      <input type="text" id="filter-material" placeholder="e.g., Bat Wing" />
+    </label>
+
+    <fieldset>
+      <legend>Expansion:</legend>
+      <label><input type="checkbox" name="expansion-filter" value="Original"> Original</label>
+      <label><input type="checkbox" name="expansion-filter" value="Kunark"> Kunark</label>
+      <label><input type="checkbox" name="expansion-filter" value="Luclin"> Luclin</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Meal Size:</legend>
+      <label><input type="checkbox" name="meal-filter" value="Snack"> Snack</label>
+      <label><input type="checkbox" name="meal-filter" value="Meal"> Meal</label>
+      <label><input type="checkbox" name="meal-filter" value="Feast"> Feast</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Tags:</legend>
+      <label><input type="checkbox" name="tag-filter" value="Snack"> Snack</label>
+      <label><input type="checkbox" name="tag-filter" value="Stat Food"> Stat Food</label>
+      <label><input type="checkbox" name="tag-filter" value="Summoned"> Summoned</label>
+    </fieldset>
+  </div>
+
+  <!-- 🔽 TABLE CONTAINER -->
   <div id="recipe-table"></div>
 
+  <!-- 🔽 SCRIPT LOADER -->
   <script src="/js/recipes.js"></script>
   <script>
-    // Ensure the DOM is ready before trying to render
     document.addEventListener("DOMContentLoaded", () => {
+      const filterInputs = document.querySelectorAll("#filters input");
+
+      filterInputs.forEach(input => {
+        input.addEventListener("input", () => loadRecipes("/data/baking.json"));
+        input.addEventListener("change", () => loadRecipes("/data/baking.json"));
+      });
+
       loadRecipes("/data/baking.json");
     });
   </script>
