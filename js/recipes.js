@@ -175,10 +175,13 @@ function enableMobileExpand() {
 
 function getMealIcon(size) {
   switch ((size || "").toLowerCase()) {
-    case "snack": return "🍪";
-    case "meal": return "🥘";
-    case "feast": return "🍽️";
-    default: return "❔";
+  "snack": "🍪",
+  "meal": "🥣",
+  "hearty meal": "🍛",
+  "banquet": "🥘",
+  "feast": "🍗",
+  "enduring meal": "🧆",
+  "miraculous meal": "✨🍽️"
   }
 }
 
