@@ -174,16 +174,18 @@ function enableMobileExpand() {
 }
 
 function getMealIcon(size) {
-  switch ((size || "").toLowerCase()) {
-  "snack": "🍪",
-  "meal": "🥣",
-  "hearty meal": "🍛",
-  "banquet": "🥘",
-  "feast": "🍗",
-  "enduring meal": "🧆",
-  "miraculous meal": "✨🍽️"
+  switch ((size || "").trim().toLowerCase()) {
+    case "snack": return "🍪";
+    case "meal": return "🥣";
+    case "hearty meal": return "🍛";
+    case "banquet": return "🥘";
+    case "feast": return "🍗";
+    case "enduring meal": return "🧆";
+    case "miraculous meal": return "✨🍽️";
+    default: return "❔";
   }
 }
+  
 
 function getStatPriority() {
   return Array.from(document.querySelectorAll("input[name='stat-priority']:checked"))
