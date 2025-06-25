@@ -4,17 +4,51 @@
   <meta charset="UTF-8" />
   <title>Baking - Grand Order of Artisans and Tradeskills</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    #toggle-filters {
+      display: none;
+      margin-bottom: 0.5em;
+    }
+
+    #filters.hidden {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      #toggle-filters {
+        display: block;
+      }
+    }
+
+    #active-filters {
+      margin-bottom: 1em;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+    }
+
+    .filter-chip {
+      background: #ddd;
+      padding: 0.25em 0.6em;
+      border-radius: 20px;
+      font-size: 0.9em;
+    }
+  </style>
 </head>
 <body>
   <h1>Baking Recipes</h1>
 
+  <button id="toggle-filters">Show/Hide Filters</button>
+
   <!-- 🔽 FILTERS BLOCK -->
   <div id="filters" class="filters">
+    <!-- 🔍 Material Search -->
     <label>
       Search Materials:
       <input type="text" id="filter-material" placeholder="e.g., Bat Wing" />
     </label>
 
+    <!-- 🗺️ Expansion -->
     <fieldset>
       <legend>Expansion:</legend>
       <label><input type="checkbox" name="expansion-filter" value="Original"> Original</label>
@@ -22,29 +56,118 @@
       <label><input type="checkbox" name="expansion-filter" value="Luclin"> Luclin</label>
     </fieldset>
 
-
+    <!-- 🍴 Meal Size -->
     <fieldset>
-      <legend>Tags:</legend>
-      <label><input type="checkbox" name="tag-filter" value="Snack"> Snack</label>
+      <legend>Meal Size:</legend>
+      <label><input type="checkbox" name="meal-filter" value="Snack"> 🍪 Snack</label>
+      <label><input type="checkbox" name="meal-filter" value="Meal"> 🥣 Meal</label>
+      <label><input type="checkbox" name="meal-filter" value="Hearty Meal"> 🍛 Hearty</label>
+      <label><input type="checkbox" name="meal-filter" value="Banquet"> 🥘 Banquet</label>
+      <label><input type="checkbox" name="meal-filter" value="Feast"> 🍗 Feast</label>
+      <label><input type="checkbox" name="meal-filter" value="Enduring Meal"> 🧆 Enduring</label>
+      <label><input type="checkbox" name="meal-filter" value="Miraculous Meal"> ✨🍽️ Miraculous</label>
+    </fieldset>
+
+    <!-- 🏷️ Recipe Traits -->
+    <fieldset>
+      <legend>Recipe Traits:</legend>
       <label><input type="checkbox" name="tag-filter" value="Stat Food"> Stat Food</label>
-      <label><input type="checkbox" name="tag-filter" value="Summoned"> Summoned</label>
+      <label><input type="checkbox" name="tag-filter" value="Buff"> Buff Effect</label>
+      <label><input type="checkbox" name="tag-filter" value="Vendor"> Vendor Sellable</label>
+      <label><input type="checkbox" name="tag-filter" value="Tradeable"> Tradeable</label>
+      <label><input type="checkbox" name="tag-filter" value="Long Duration"> Long Duration</label>
+    </fieldset>
+
+    <!-- 🎯 Stat Priority -->
+    <fieldset>
+      <legend>Stat Priority (Sort):</legend>
+      <label><input type="checkbox" name="stat-priority" value="str"> STR</label>
+      <label><input type="checkbox" name="stat-priority" value="sta"> STA</label>
+      <label><input type="checkbox" name="stat-priority" value="agi"> AGI</label>
+      <label><input type="checkbox" name="stat-priority" value="dex"> DEX</label>
+      <label><input type="checkbox" name="stat-priority" value="wis"> WIS</label>
+      <label><input type="checkbox" name="stat-priority" value="int"> INT</label>
+      <label><input type="checkbox" name="stat-priority" value="cha"> CHA</label>
+      <label><input type="checkbox" name="stat-priority" value="hp"> HP</label>
+      <label><input type="checkbox" name="stat-priority" value="mp"> MP</label>
     </fieldset>
   </div>
 
-  <!-- 🔽 TABLE CONTAINER -->
+  <!-- 🧊 ACTIVE FILTER CHIPS -->
+  <div id="active-filters"></div>
+
+  <!-- 🧾 TABLE CONTAINER -->
   <div id="recipe-table"></div>
 
   <!-- 🔽 SCRIPT LOADER -->
   <script src="/js/recipes.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const filterInputs = document.querySelectorAll("#filters input");
+      const filtersDiv = document.getElementById("filters");
+      const toggleButton = document.getElementById("toggle-filters");
+      const filterInputs = filtersDiv.querySelectorAll("input");
+      const activeFilterDiv = document.getElementById("active-filters");
+
+      function saveFilters() {
+        const selected = Array.from(filterInputs).filter(i => i.checked || i.type === "text");
+        const data = {};
+        selected.forEach(input => {
+          if (input.type === "checkbox") {
+            if (!data[input.name]) data[input.name] = [];
+            data[input.name].push(input.value);
+          } else if (input.type === "text") {
+            data[input.id] = input.value;
+          }
+        });
+        localStorage.setItem("bakingFilters", JSON.stringify(data));
+      }
+
+      function loadFilters() {
+        const data = JSON.parse(localStorage.getItem("bakingFilters") || "{}");
+        filterInputs.forEach(input => {
+          if (input.type === "checkbox" && data[input.name]?.includes(input.value)) {
+            input.checked = true;
+          } else if (input.type === "text" && data[input.id]) {
+            input.value = data[input.id];
+          }
+        });
+      }
+
+      function updateActiveFilters() {
+        const active = Array.from(filterInputs).filter(i =>
+          (i.type === "checkbox" && i.checked) ||
+          (i.type === "text" && i.value.trim() !== "")
+        );
+
+        activeFilterDiv.innerHTML = "";
+        active.forEach(input => {
+          const label = input.closest("label")?.textContent?.trim() || input.value;
+          const span = document.createElement("span");
+          span.className = "filter-chip";
+          span.textContent = label;
+          activeFilterDiv.appendChild(span);
+        });
+      }
 
       filterInputs.forEach(input => {
-        input.addEventListener("input", () => loadRecipes("/data/baking.json"));
-        input.addEventListener("change", () => loadRecipes("/data/baking.json"));
+        input.addEventListener("input", () => {
+          saveFilters();
+          updateActiveFilters();
+          loadRecipes("/data/baking.json");
+        });
+        input.addEventListener("change", () => {
+          saveFilters();
+          updateActiveFilters();
+          loadRecipes("/data/baking.json");
+        });
       });
 
+      toggleButton.addEventListener("click", () => {
+        filtersDiv.classList.toggle("hidden");
+      });
+
+      loadFilters();
+      updateActiveFilters();
       loadRecipes("/data/baking.json");
     });
   </script>
