@@ -61,5 +61,16 @@
     "mealSize": "Meal",
     "expansion": "Original",
     "stats": {}
+  },
+  {
+  "name": "Boiled Rockhopper Egg",
+  "trivial": 46,
+  "components": ["Rockhopper Egg", "Spices", "Water Flask", "Oven"],
+  "result": "Boiled Rockhopper Egg",
+  "yield": 1,
+  "tags": [],
+  "mealSize": "Snack",
+  "expansion": "Luclin",
+  "stats": {"Str": 1}
   }
 ]
