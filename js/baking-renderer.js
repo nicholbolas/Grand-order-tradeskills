@@ -1,4 +1,19 @@
-            function renderRecipeTable(recipes) {
+            const mealSizeIcons = {
+  "snack": "🍪",
+  "meal": "🥣",
+  "hearty meal": "🍛",
+  "banquet": "🥘",
+  "feast": "🍗",
+  "enduring meal": "🧆",
+  "miraculous meal": "✨🍽️"
+};
+
+function getMealIcon(size) {
+  if (!size) return "❓";
+  return mealSizeIcons[size.toLowerCase()] || "🍴";
+}
+
+function renderRecipeTable(recipes) {
   const container = document.getElementById("recipe-table");
   if (!container) return;
   container.innerHTML = "";
@@ -68,4 +83,4 @@
 
   enableMobileExpand();
   enableSubcombineToggles(); // ← THIS IS KEY
-            }
+}
