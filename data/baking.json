@@ -54,7 +54,7 @@
   {
   "name": "Slice of Jumjum Cake",
   "trivial": 27,
-  "components": [Jumjum Cake, Oven],
+  "components": ["Jumjum Cake", "Oven"],
   "result": "Slice of Jumjum Cake",
   "yield": 10,
   "tags": [],
