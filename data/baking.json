@@ -50,7 +50,7 @@
     "mealSize": "Hearty Meal",
     "expansion": "Original",
     "stats": {}
-  }
+  },
   {
   "name": "Slice of Jumjum Cake",
   "trivial": 27,
@@ -58,8 +58,8 @@
   "result": "Slice of Jumjum Cake",
   "yield": 10,
   "tags": [],
-  "mealSize": "meal",
-  "expansion": "original",
+  "mealSize": "Meal",
+  "expansion": "Original",
   "stats": {}
   }
 ]
