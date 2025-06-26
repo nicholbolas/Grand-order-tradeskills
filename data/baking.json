@@ -68,7 +68,7 @@
   "components": ["Rockhopper Egg", "Spices", "Water Flask", "Oven"],
   "result": "Boiled Rockhopper Egg",
   "yield": 1,
-  "tags": [],
+  "tags": ["Stat Food"],
   "mealSize": "Snack",
   "expansion": "Luclin",
   "stats": {"Str": 1}
