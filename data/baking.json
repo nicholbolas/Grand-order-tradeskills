@@ -83,5 +83,16 @@
   "mealSize": "Feast",
   "expansion": "Luclin",
   "stats": {"Str" 5, "HP" 10}
+  },
+  {
+  "name": "Mind Worm Steaks",
+  "trivial": 188,
+  "components": ["Jug of Sauces","Mind Worm Meat", "Spices" ],
+  "result": "Mind Worm Steaks",
+  "yield": 2,
+  "tags": ["Stat Food"],
+  "mealSize": "Feast",
+  "expansion": "Luclin",
+  "stats": {"Sta" 5,"MP" 30}
   }
 ]
