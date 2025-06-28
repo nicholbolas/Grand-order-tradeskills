@@ -72,5 +72,16 @@
   "mealSize": "Snack",
   "expansion": "Luclin",
   "stats": {"Str": 1}
+  },
+  {
+  "name": "Centi Steaks",
+  "trivial": 188,
+  "components": ["Centi Meat", "Jug of Sauces", "Spices"],
+  "result": "Centi Steaks",
+  "yield": 2,
+  "tags": ["Star Food"],
+  "mealSize": "Feast",
+  "expansion": "Luclin",
+  "stats": {"Str" 5, "HP" 10}
   }
 ]
