@@ -79,10 +79,10 @@
   "components": ["Centi Meat", "Jug of Sauces", "Spices"],
   "result": "Centi Steaks",
   "yield": 2,
-  "tags": ["Star Food"],
+  "tags": ["Stat Food"],
   "mealSize": "Feast",
   "expansion": "Luclin",
-  "stats": {"Str" 5, "HP" 10}
+  "stats": {"Str": 5, "HP": 10}
   },
   {
   "name": "Mind Worm Steaks",
@@ -93,6 +93,6 @@
   "tags": ["Stat Food"],
   "mealSize": "Feast",
   "expansion": "Luclin",
-  "stats": {"Sta" 5,"MP" 30}
+  "stats": {"Sta": 5,"MP": 30}
   }
 ]
